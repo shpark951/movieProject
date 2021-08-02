@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content-header %}
+<h1><i class="fas fa-list"></i> {{object.title}}</h1>
+{% endblock %}
+{% block content%}
+<p>
+    {%if object.get_previous %}
+    <a href="{{object.get_previous.get_absolute_url}}" title="이전 글">prev</a>
+    {%endif%}
+    {%if object.get_next %}
+    <a href="{{object.get_next.get_absolute_url}}" title="다음 글">next</a>
+    {%endif%}
+</p>
+<p>{{object.modify_dt|date:"Y-m-d"}}</p>
+{% if user == post.owner %}
+<div class="text-right">
+ <a href="{% url 'blog:update' post.id %}" class="mr-3">
+ <i class="far fa-edit"></i> 수정</a>
+ <a href="javascript:deletePost('{% url 'blog:delete' post.id %}')" 
+ class="text-danger mr-3"><i class="fas fa-trash"></i> 삭제</a>
+ </div>
+{% endif %}
+
+<div>    
+    {% autoescape off %}
+    {{object.content}}     
+    {% endautoescape %}   
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+function deleteBookmark(url) {
+ if(!confirm('삭제할까요?')) {
+ return
+ }
+ 
+ location= url
+}
+</script>
+{% endblock %}

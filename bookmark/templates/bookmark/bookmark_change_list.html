@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content-header %}
+<h1><i class="fas fa-list"></i> Bookmark 수정 목록</h1>
+{% endblock %}
+{% block content %}
+<div class="m-3">
+    <table class="table table-bordered table-condensed table-striped">
+        <thead>
+            <tr class="table-primary">
+                <th>Title</th>
+                <th>Url</th>
+                <th>Owner</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in object_list %}
+            <tr>
+                <td>{{ item.title }}</td>
+                <td>{{ item.url }}</td>
+                <td>{{ item.owner }}</td>
+                <td><a href="{% url 'bookmark:update' item.id %}">
+                        <i class="far fa-edit"></i> 수정</a>
+                    </a></td>
+                <td><a href="javascript:deleteBookmark('{% url 'bookmark:delete' item.id %}')">
+                        <i class="fas fa-trash"></i> 삭제</a>
+                    </a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+function deleteBookmark(url) {
+ if(!confirm('삭제할까요?')) {
+ return
+ }
+ 
+ location= url
+}
+</script>
+{% endblock %}
